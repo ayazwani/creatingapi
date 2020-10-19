@@ -1,3 +1,19 @@
+"""
+@author ayaz wani
+
+following is the api which has 4 endpoints
+
+endpoint1: /file-upload (this endpoint is used to uplad a file)
+endpoint2: /search (this endpoint is used to search parameterized and non parameterizez requests)
+endpoint3: /makecsv (this endpoint aonverts xmls to csv)
+endpoint4: /findnct (this end point is used to find a nct_id and retrieve the info from it in a json format)
+enpint5: /append (this endpoint parses the csv file previously made a searches the nct_id if found
+ 					overwrites it and if not appends a nw to the csv)
+
+
+
+
+"""
 import xml.dom.minidom,csv,glob
 import os
 from flask import Flask, flash, request, redirect, url_for,jsonify
@@ -9,7 +25,7 @@ app = Flask(__name__)
 
 
 UPLOAD_FOLDER = '/home/ayaz/Desktop/Applied Informatics/flask/upload'
-ALLOWED_EXTENSIONS = {'txt', 'pdf','json','xml'}
+ALLOWED_EXTENSIONS = {'json','xml'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def allowed_file(filename):
@@ -34,7 +50,7 @@ def upload_file():
 		resp.status_code = 201
 		return resp
 	else:
-		resp = jsonify({'message' : 'Allowed file types are txt, pdf, png, jpg, jpeg, gif'})
+		resp = jsonify({'message' : 'Allowed file types are txt, json,xml'})
 		resp.status_code = 400
 		return resp
 
@@ -134,18 +150,6 @@ def append1():
 		data.clear()
 	testdata.close()
 	return jsonify({"message":"csv_appended"})
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
